@@ -735,7 +735,7 @@ namespace ZeeGraph
 		public bool IsShowHScrollBar
 		{
 			get { return _isShowHScrollBar; }
-			set { _isShowHScrollBar = value; ZedGraphControl_ReSize( this, new EventArgs() ); }
+			set { _isShowHScrollBar = value; OnResize( new EventArgs() ); }
 		}
 		/// <summary>
 		/// Gets or sets a value that determines if the vertical scroll bar will be visible.
@@ -759,7 +759,7 @@ namespace ZeeGraph
 		public bool IsShowVScrollBar
 		{
 			get { return _isShowVScrollBar; }
-			set { _isShowVScrollBar = value; ZedGraphControl_ReSize( this, new EventArgs() ); }
+			set { _isShowVScrollBar = value; OnResize( new EventArgs() ); }
 		}
 
 		/// <summary>

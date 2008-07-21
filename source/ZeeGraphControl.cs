@@ -691,13 +691,10 @@ namespace ZeeGraph
         /// <summary>
         /// Called when the control has been resized.
         /// </summary>
-        /// <param name="sender">
-        /// A reference to the control that has been resized.
-        /// </param>
         /// <param name="e">
         /// An EventArgs object.
         /// </param>
-        protected void ZedGraphControl_ReSize(object sender, EventArgs e)
+        protected void HandleResize(EventArgs e)
         {
             lock (this)
             {
@@ -772,6 +769,16 @@ namespace ZeeGraph
                 {
                 }
             }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data. </param>
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            HandleResize(e);
         }
 
         #endregion

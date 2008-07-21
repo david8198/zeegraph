@@ -60,10 +60,6 @@ namespace ZeeGraph
 			this.Controls.Add( this.hScrollBar1 );
 			this.Controls.Add( this.vScrollBar1 );
 			this.Name = "ZeeGraphControl";
-			this.Resize += new System.EventHandler( this.ZedGraphControl_ReSize );
-			this.KeyUp += new System.Windows.Forms.KeyEventHandler( this.ZedGraphControl_KeyUp );
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler( this.ZedGraphControl_KeyDown );
-			this.MouseWheel += new System.Windows.Forms.MouseEventHandler( this.ZedGraphControl_MouseWheel );
 			this.ResumeLayout( false );
 
 		}
