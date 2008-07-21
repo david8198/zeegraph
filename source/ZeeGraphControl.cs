@@ -479,11 +479,6 @@ namespace ZeeGraph
             _dragPane = null;
             InitializeComponent();
 
-            // Link in these events from the base class, since we disable them from this class.
-            base.MouseDown += ZedGraphControl_MouseDown;
-            base.MouseUp += ZedGraphControl_MouseUp;
-            base.MouseMove += ZedGraphControl_MouseMove;
-
             // Use double-buffering for flicker-free updating:
             SetStyle(ControlStyles.UserPaint |
                      ControlStyles.AllPaintingInWmPaint |

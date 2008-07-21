@@ -393,6 +393,163 @@ namespace ZeeGraph
         }
 
         /// <summary>
+        /// Handle a MouseDown event in the <see cref="ZeeGraphControl" />
+        /// </summary>
+        /// <param name="e">A <see cref="MouseEventArgs" /> instance</param>
+        protected void HandleMouseDown(MouseEventArgs e)
+        {
+            _isPanning = false;
+            _isZooming = false;
+            _isEditing = false;
+            _isSelecting = false;
+            _dragPane = null;
+
+            Point mousePt = new Point(e.X, e.Y);
+
+            // Callback for doubleclick events
+            if (_masterPane != null && e.Clicks > 1 && DoubleClickEvent != null)
+            {
+                if (DoubleClickEvent(this, e))
+                    return;
+            }
+
+            // Provide Callback for MouseDown events
+            if (_masterPane != null && MouseDownEvent != null)
+            {
+                if (MouseDownEvent(this, e))
+                    return;
+            }
+
+            if (e.Clicks > 1 || _masterPane == null)
+                return;
+
+            // First, see if the click is within a Linkable object within any GraphPane
+            GraphPane pane = MasterPane.FindPane(mousePt);
+            if (pane != null &&
+                e.Button == _linkButtons && ModifierKeys == _linkModifierKeys)
+            {
+                Link link;
+                using (Graphics g = CreateGraphics())
+                {
+                    float scaleFactor = pane.CalcScaleFactor();
+                    object source;
+                    int index;
+                    if (pane.FindLinkableObject(mousePt, g, scaleFactor, out source, out link, out index))
+                    {
+                        if (LinkEvent != null && LinkEvent(this, pane, source, link, index))
+                            return;
+
+                        string url;
+                        CurveItem curve = source as CurveItem;
+
+                        if (curve != null)
+                            url = link.MakeCurveItemUrl(pane, curve, index);
+                        else
+                            url = link._url;
+
+                        if (url != string.Empty)
+                        {
+                            Process.Start(url);
+                            // linkable objects override any other actions with mouse
+                            return;
+                        }
+                    }
+                    //g.Dispose();
+                }
+            }
+
+            // Second, Check to see if it's within a Chart Rect
+            pane = MasterPane.FindChartRect(mousePt);
+            //Rectangle rect = new Rectangle( mousePt, new Size( 1, 1 ) );
+
+            if (pane != null &&
+                (_isEnableHPan || _isEnableVPan) &&
+                ((e.Button == _panButtons && ModifierKeys == _panModifierKeys) ||
+                 (e.Button == _panButtons2 && ModifierKeys == _panModifierKeys2)))
+            {
+                _isPanning = true;
+                _dragStartPt = mousePt;
+                _dragPane = pane;
+                //_zoomState = new ZoomState( _dragPane, ZoomState.StateType.Pan );
+                ZoomStateSave(_dragPane, ZoomState.StateType.Pan);
+            }
+            else if (pane != null && (_isEnableHZoom || _isEnableVZoom) &&
+                     ((e.Button == _zoomButtons && ModifierKeys == _zoomModifierKeys) ||
+                      (e.Button == _zoomButtons2 && ModifierKeys == _zoomModifierKeys2)))
+            {
+                _isZooming = true;
+                _dragStartPt = mousePt;
+                _dragEndPt = mousePt;
+                _dragEndPt.Offset(1, 1);
+                _dragPane = pane;
+                ZoomStateSave(_dragPane, ZoomState.StateType.Zoom);
+            }
+                //Revision: JCarpenter 10/06
+            else if (pane != null && _isEnableSelection && e.Button == _selectButtons &&
+                     (ModifierKeys == _selectModifierKeys ||
+                      ModifierKeys == _selectAppendModifierKeys))
+            {
+                _isSelecting = true;
+                _dragStartPt = mousePt;
+                _dragEndPt = mousePt;
+                _dragEndPt.Offset(1, 1);
+                _dragPane = pane;
+            }
+            else if (pane != null && (_isEnableHEdit || _isEnableVEdit) &&
+                     (e.Button == EditButtons && ModifierKeys == EditModifierKeys))
+            {
+                // find the point that was clicked, and make sure the point list is editable
+                // and that it's a primary Y axis (the first Y or Y2 axis)
+                if (pane.FindNearestPoint(mousePt, out _dragCurve, out _dragIndex) &&
+                    _dragCurve.Points is IPointListEdit)
+                {
+                    _isEditing = true;
+                    _dragPane = pane;
+                    _dragStartPt = mousePt;
+                    _dragStartPair = _dragCurve[_dragIndex];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handle a MouseUp event in the <see cref="ZeeGraphControl" />
+        /// </summary>
+        /// <param name="e">A <see cref="MouseEventArgs" /> instance</param>
+        protected void HandleMouseUp(MouseEventArgs e)
+        {
+            // Provide Callback for MouseUp events
+            if (_masterPane != null && MouseUpEvent != null)
+            {
+                if (MouseUpEvent(this, e))
+                    return;
+            }
+
+            if (_masterPane != null && _dragPane != null)
+            {
+                // If the MouseUp event occurs, the user is done dragging.
+                if (_isZooming)
+                    HandleZoomFinish(this, e);
+                else if (_isPanning)
+                    HandlePanFinish();
+                else if (_isEditing)
+                    HandleEditFinish();
+                    //Revision: JCarpenter 10/06
+                else if (_isSelecting)
+                    HandleSelectionFinish(this, e);
+            }
+
+            // Reset the rectangle.
+            //dragStartPt = new Rectangle( 0, 0, 0, 0 );
+            _dragPane = null;
+            _isZooming = false;
+            _isPanning = false;
+            _isEditing = false;
+            _isSelecting = false;
+
+            Cursor.Current = Cursors.Default;
+        }
+
+        /// <summary>
         /// Make a string label that corresponds to a user scale value.
         /// </summary>
         /// <param name="axis">The axis from which to obtain the scale value.  This determines
@@ -1114,6 +1271,44 @@ namespace ZeeGraph
         #region Event Handling
 
         /// <summary>
+        /// protected method for handling MouseMove events to display tooltips over
+        /// individual datapoints.
+        /// </summary>
+        /// <param name="e">
+        /// A MouseEventArgs object.
+        /// </param>
+        protected void HandleMouseMove(MouseEventArgs e)
+        {
+            if (_masterPane == null) return;
+
+            Point mousePt = new Point(e.X, e.Y);
+
+            // Provide Callback for MouseMove events
+            if (MouseMoveEvent != null && MouseMoveEvent(this, e))
+                return;
+
+            //Point tempPt = this.PointToClient( Control.MousePosition );
+
+            SetCursor(mousePt);
+
+            // If the mouse is being dragged,
+            // undraw and redraw the rectangle as the mouse moves.
+            if (_isZooming)
+                HandleZoomDrag(mousePt);
+            else if (_isPanning)
+                HandlePanDrag(mousePt);
+            else if (_isEditing)
+                HandleEditDrag(mousePt);
+            else if (_isShowCursorValues)
+                HandleCursorValues(mousePt);
+            else if (_isShowPointValues)
+                HandlePointValues(mousePt);
+                //Revision: JCarpenter 10/06
+            else if (_isSelecting)
+                HandleZoomDrag(mousePt);
+        }
+
+        /// <summary>
         /// Handle the Key Events so ZedGraph can Escape out of a panning or zooming operation.
         /// </summary>
         /// <param name="sender"></param>
@@ -1150,206 +1345,6 @@ namespace ZeeGraph
         protected void ZedGraphControl_KeyUp(object sender, KeyEventArgs e)
         {
             SetCursor();
-        }
-
-        /// <summary>
-        /// Handle a MouseDown event in the <see cref="ZeeGraphControl" />
-        /// </summary>
-        /// <param name="sender">A reference to the <see cref="ZeeGraphControl" /></param>
-        /// <param name="e">A <see cref="MouseEventArgs" /> instance</param>
-        protected void ZedGraphControl_MouseDown(object sender, MouseEventArgs e)
-        {
-            _isPanning = false;
-            _isZooming = false;
-            _isEditing = false;
-            _isSelecting = false;
-            _dragPane = null;
-
-            Point mousePt = new Point(e.X, e.Y);
-
-            // Callback for doubleclick events
-            if (_masterPane != null && e.Clicks > 1 && DoubleClickEvent != null)
-            {
-                if (DoubleClickEvent(this, e))
-                    return;
-            }
-
-            // Provide Callback for MouseDown events
-            if (_masterPane != null && MouseDownEvent != null)
-            {
-                if (MouseDownEvent(this, e))
-                    return;
-            }
-
-            if (e.Clicks > 1 || _masterPane == null)
-                return;
-
-            // First, see if the click is within a Linkable object within any GraphPane
-            GraphPane pane = MasterPane.FindPane(mousePt);
-            if (pane != null &&
-                e.Button == _linkButtons && ModifierKeys == _linkModifierKeys)
-            {
-                Link link;
-                using (Graphics g = CreateGraphics())
-                {
-                    float scaleFactor = pane.CalcScaleFactor();
-                    object source;
-                    int index;
-                    if (pane.FindLinkableObject(mousePt, g, scaleFactor, out source, out link, out index))
-                    {
-                        if (LinkEvent != null && LinkEvent(this, pane, source, link, index))
-                            return;
-
-                        string url;
-                        CurveItem curve = source as CurveItem;
-
-                        if (curve != null)
-                            url = link.MakeCurveItemUrl(pane, curve, index);
-                        else
-                            url = link._url;
-
-                        if (url != string.Empty)
-                        {
-                            Process.Start(url);
-                            // linkable objects override any other actions with mouse
-                            return;
-                        }
-                    }
-                    //g.Dispose();
-                }
-            }
-
-            // Second, Check to see if it's within a Chart Rect
-            pane = MasterPane.FindChartRect(mousePt);
-            //Rectangle rect = new Rectangle( mousePt, new Size( 1, 1 ) );
-
-            if (pane != null &&
-                (_isEnableHPan || _isEnableVPan) &&
-                ((e.Button == _panButtons && ModifierKeys == _panModifierKeys) ||
-                 (e.Button == _panButtons2 && ModifierKeys == _panModifierKeys2)))
-            {
-                _isPanning = true;
-                _dragStartPt = mousePt;
-                _dragPane = pane;
-                //_zoomState = new ZoomState( _dragPane, ZoomState.StateType.Pan );
-                ZoomStateSave(_dragPane, ZoomState.StateType.Pan);
-            }
-            else if (pane != null && (_isEnableHZoom || _isEnableVZoom) &&
-                     ((e.Button == _zoomButtons && ModifierKeys == _zoomModifierKeys) ||
-                      (e.Button == _zoomButtons2 && ModifierKeys == _zoomModifierKeys2)))
-            {
-                _isZooming = true;
-                _dragStartPt = mousePt;
-                _dragEndPt = mousePt;
-                _dragEndPt.Offset(1, 1);
-                _dragPane = pane;
-                ZoomStateSave(_dragPane, ZoomState.StateType.Zoom);
-            }
-                //Revision: JCarpenter 10/06
-            else if (pane != null && _isEnableSelection && e.Button == _selectButtons &&
-                     (ModifierKeys == _selectModifierKeys ||
-                      ModifierKeys == _selectAppendModifierKeys))
-            {
-                _isSelecting = true;
-                _dragStartPt = mousePt;
-                _dragEndPt = mousePt;
-                _dragEndPt.Offset(1, 1);
-                _dragPane = pane;
-            }
-            else if (pane != null && (_isEnableHEdit || _isEnableVEdit) &&
-                     (e.Button == EditButtons && ModifierKeys == EditModifierKeys))
-            {
-                // find the point that was clicked, and make sure the point list is editable
-                // and that it's a primary Y axis (the first Y or Y2 axis)
-                if (pane.FindNearestPoint(mousePt, out _dragCurve, out _dragIndex) &&
-                    _dragCurve.Points is IPointListEdit)
-                {
-                    _isEditing = true;
-                    _dragPane = pane;
-                    _dragStartPt = mousePt;
-                    _dragStartPair = _dragCurve[_dragIndex];
-                }
-            }
-        }
-
-        /// <summary>
-        /// protected method for handling MouseMove events to display tooltips over
-        /// individual datapoints.
-        /// </summary>
-        /// <param name="sender">
-        /// A reference to the control that has the MouseMove event.
-        /// </param>
-        /// <param name="e">
-        /// A MouseEventArgs object.
-        /// </param>
-        protected void ZedGraphControl_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (_masterPane == null) return;
-
-            Point mousePt = new Point(e.X, e.Y);
-
-            // Provide Callback for MouseMove events
-            if (MouseMoveEvent != null && MouseMoveEvent(this, e))
-                return;
-
-            //Point tempPt = this.PointToClient( Control.MousePosition );
-
-            SetCursor(mousePt);
-
-            // If the mouse is being dragged,
-            // undraw and redraw the rectangle as the mouse moves.
-            if (_isZooming)
-                HandleZoomDrag(mousePt);
-            else if (_isPanning)
-                HandlePanDrag(mousePt);
-            else if (_isEditing)
-                HandleEditDrag(mousePt);
-            else if (_isShowCursorValues)
-                HandleCursorValues(mousePt);
-            else if (_isShowPointValues)
-                HandlePointValues(mousePt);
-                //Revision: JCarpenter 10/06
-            else if (_isSelecting)
-                HandleZoomDrag(mousePt);
-        }
-
-        /// <summary>
-        /// Handle a MouseUp event in the <see cref="ZeeGraphControl" />
-        /// </summary>
-        /// <param name="sender">A reference to the <see cref="ZeeGraphControl" /></param>
-        /// <param name="e">A <see cref="MouseEventArgs" /> instance</param>
-        protected void ZedGraphControl_MouseUp(object sender, MouseEventArgs e)
-        {
-            // Provide Callback for MouseUp events
-            if (_masterPane != null && MouseUpEvent != null)
-            {
-                if (MouseUpEvent(this, e))
-                    return;
-            }
-
-            if (_masterPane != null && _dragPane != null)
-            {
-                // If the MouseUp event occurs, the user is done dragging.
-                if (_isZooming)
-                    HandleZoomFinish(sender, e);
-                else if (_isPanning)
-                    HandlePanFinish();
-                else if (_isEditing)
-                    HandleEditFinish();
-                    //Revision: JCarpenter 10/06
-                else if (_isSelecting)
-                    HandleSelectionFinish(sender, e);
-            }
-
-            // Reset the rectangle.
-            //dragStartPt = new Rectangle( 0, 0, 0, 0 );
-            _dragPane = null;
-            _isZooming = false;
-            _isPanning = false;
-            _isEditing = false;
-            _isSelecting = false;
-
-            Cursor.Current = Cursors.Default;
         }
 
         /// <summary>
@@ -1394,6 +1389,40 @@ namespace ZeeGraph
                 ZoomEvent(this, oldState, new ZoomState(pane, ZoomState.StateType.WheelZoom));
 
             Refresh();
+        }
+
+        #endregion
+
+        #region Event Methods
+
+        /// <summary>
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data. </param>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            HandleMouseDown(e);
+            base.OnMouseDown(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data. </param>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            HandleMouseMove(e);
+
+            base.OnMouseMove(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseUp" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data. </param>
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            HandleMouseUp(e);
+            base.OnMouseUp(e);
         }
 
         #endregion
