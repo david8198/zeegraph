@@ -1,0 +1,236 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2541686B-1673-43BF-AF89-3163945DB009}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZeeGraph</RootNamespace>
+    <AssemblyName>ZeeGraph</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>zeegraph.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\ZeeGraph.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\TempFileDestructor.cs" />
+    <Compile Include="Web\ZeeGraphWeb.cs" />
+    <Compile Include="Web\ZeeGraphWebData.cs" />
+    <Compile Include="Web\ZeeGraphWebTools.cs" />
+    <Compile Include="ArrowObj.cs" />
+    <Compile Include="Axis.cs" />
+    <Compile Include="AxisLabel.cs" />
+    <Compile Include="Bar.cs" />
+    <Compile Include="BarItem.cs" />
+    <Compile Include="BarSettings.cs" />
+    <Compile Include="BasicArrayPointList.cs" />
+    <Compile Include="Border.cs" />
+    <Compile Include="BoxObj.cs" />
+    <Compile Include="HiLowBarItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OHLCBar.cs" />
+    <Compile Include="OHLCBarItem.cs" />
+    <Compile Include="Chart.cs" />
+    <Compile Include="CollectionPlus.cs" />
+    <Compile Include="ColorSymbolRotator.cs" />
+    <Compile Include="CurveItem.cs" />
+    <Compile Include="CurveList.cs" />
+    <Compile Include="DataSourcePointList.cs" />
+    <Compile Include="DateAsOrdinalScale.cs" />
+    <Compile Include="DateScale.cs" />
+    <Compile Include="EllipseObj.cs" />
+    <Compile Include="ErrorBar.cs" />
+    <Compile Include="ErrorBarItem.cs" />
+    <Compile Include="ExponentScale.cs" />
+    <Compile Include="Fill.cs" />
+    <Compile Include="FilteredPointList.cs" />
+    <Compile Include="FontSpec.cs" />
+    <Compile Include="GapLabel.cs" />
+    <Compile Include="GasGaugeNeedle.cs" />
+    <Compile Include="GasGaugeRegion.cs" />
+    <Compile Include="GraphObj.cs" />
+    <Compile Include="GraphObjList.cs" />
+    <Compile Include="GraphPane.cs" />
+    <Compile Include="HSBColor.cs" />
+    <Compile Include="ImageObj.cs" />
+    <Compile Include="IPointList.cs" />
+    <Compile Include="IPointListEdit.cs" />
+    <Compile Include="JapaneseCandleStick.cs" />
+    <Compile Include="JapaneseCandleStickItem.cs" />
+    <Compile Include="Label.cs" />
+    <Compile Include="Legend.cs" />
+    <Compile Include="Line.cs" />
+    <Compile Include="LinearAsOrdinalScale.cs" />
+    <Compile Include="LinearScale.cs" />
+    <Compile Include="LineBase.cs" />
+    <Compile Include="LineItem.cs" />
+    <Compile Include="LineObj.cs" />
+    <Compile Include="Link.cs" />
+    <Compile Include="Location.cs" />
+    <Compile Include="LogScale.cs" />
+    <Compile Include="MajorGrid.cs" />
+    <Compile Include="MajorTic.cs" />
+    <Compile Include="Margin.cs" />
+    <Compile Include="MasterPane.cs" />
+    <Compile Include="MinorGrid.cs" />
+    <Compile Include="MinorTic.cs" />
+    <Compile Include="NoDupePointList.cs" />
+    <Compile Include="OrdinalScale.cs" />
+    <Compile Include="PaneBase.cs" />
+    <Compile Include="PaneList.cs" />
+    <Compile Include="PieItem.cs" />
+    <Compile Include="PointD.cs" />
+    <Compile Include="PointPair.cs" />
+    <Compile Include="PointPair4.cs" />
+    <Compile Include="PointPairBase.cs" />
+    <Compile Include="PointPairCV.cs" />
+    <Compile Include="PointPairList.cs" />
+    <Compile Include="PolyObj.cs" />
+    <Compile Include="RadarPointList.cs" />
+    <Compile Include="RollingPointPairList.cs" />
+    <Compile Include="SampleMultiPointList.cs" />
+    <Compile Include="SamplePointList.cs" />
+    <Compile Include="Scale.cs" />
+    <Compile Include="ScaleState.cs" />
+    <Compile Include="ScaleStateList.cs" />
+    <Compile Include="ScrollRange.cs" />
+    <Compile Include="ScrollRangeList.cs" />
+    <Compile Include="Selection.cs" />
+    <Compile Include="StickItem.cs" />
+    <Compile Include="StockPointList.cs" />
+    <Compile Include="StockPt.cs" />
+    <Compile Include="Symbol.cs" />
+    <Compile Include="TextObj.cs" />
+    <Compile Include="TextScale.cs" />
+    <Compile Include="Types.cs" />
+    <Compile Include="ValueHandler.cs" />
+    <Compile Include="X2Axis.cs" />
+    <Compile Include="XAxis.cs" />
+    <Compile Include="XDate.cs" />
+    <Compile Include="Y2Axis.cs" />
+    <Compile Include="Y2AxisList.cs" />
+    <Compile Include="YAxis.cs" />
+    <Compile Include="YAxisList.cs" />
+    <Compile Include="ZeeGraphControl.ContextMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ZeeGraphControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ZeeGraphControl.Designer.cs">
+      <DependentUpon>ZeeGraphControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ZeeGraphControl.Events.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ZeeGraphControl.Printing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ZeeGraphControl.Properties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ZeeGraphControl.ScrollBars.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ZeeGraphException.cs" />
+    <Compile Include="ZoomState.cs" />
+    <Compile Include="ZoomStateStack.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ZeeGraphControl.resx">
+      <DependentUpon>ZeeGraphControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.hu.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.it.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.ja.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.pt.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.ru.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.sk.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.sv.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.tr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.tw.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.zh-cn.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZeeGraphLocale.zh-tw.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="zeegraph.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
