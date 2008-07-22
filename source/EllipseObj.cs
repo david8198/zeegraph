@@ -244,7 +244,7 @@ namespace ZeeGraph
 
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			RectangleF pixRect = _location.TransformRect( pane );
+			RectangleF pixRect = Location.TransformRect( pane );
 
 			using ( GraphicsPath path = new GraphicsPath() )
 			{

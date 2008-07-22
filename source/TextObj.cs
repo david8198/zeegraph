@@ -371,7 +371,7 @@ namespace ZeeGraph
 		{
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			PointF pix = _location.Transform( pane );
+			PointF pix = Location.Transform( pane );
 			
 			// Draw the text on the screen, including any frame and background
 			// fill elements
@@ -382,7 +382,7 @@ namespace ZeeGraph
 				//		this.location.AlignH, this.location.AlignV, scaleFactor );
 				//else
 					this.FontSpec.Draw( g, pane, _text, pix.X, pix.Y,
-						_location.AlignH, _location.AlignV, scaleFactor, _layoutArea );
+						Location.AlignH, Location.AlignV, scaleFactor, _layoutArea );
 
 			}
 		}
@@ -415,10 +415,10 @@ namespace ZeeGraph
 
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			PointF pix = _location.Transform( pane );
+			PointF pix = Location.Transform( pane );
 			
 			return _fontSpec.PointInBox( pt, g, _text, pix.X, pix.Y,
-								_location.AlignH, _location.AlignV, scaleFactor, this.LayoutArea );
+								Location.AlignH, Location.AlignV, scaleFactor, this.LayoutArea );
 		}
 
 		/// <summary>
@@ -429,10 +429,10 @@ namespace ZeeGraph
 		{
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			PointF pix = _location.Transform( pane );
+			PointF pix = Location.Transform( pane );
 
-			PointF[] pts = _fontSpec.GetBox( g, _text, pix.X, pix.Y, _location.AlignH,
-				_location.AlignV, scaleFactor, new SizeF() );
+			PointF[] pts = _fontSpec.GetBox( g, _text, pix.X, pix.Y, Location.AlignH,
+				Location.AlignV, scaleFactor, new SizeF() );
 
 			shape = "poly";
 			coords = String.Format( "{0:f0},{1:f0},{2:f0},{3:f0},{4:f0},{5:f0},{6:f0},{7:f0},",

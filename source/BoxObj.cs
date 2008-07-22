@@ -322,7 +322,7 @@ namespace ZeeGraph
 
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			RectangleF pixRect = _location.TransformRect( pane );
+			RectangleF pixRect = Location.TransformRect( pane );
 
 			return pixRect.Contains( pt );
 		}
@@ -335,7 +335,7 @@ namespace ZeeGraph
 		{
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			RectangleF pixRect = _location.TransformRect( pane );
+			RectangleF pixRect = Location.TransformRect( pane );
 
 			shape = "rect";
 			coords = String.Format( "{0:f0},{1:f0},{2:f0},{3:f0}",

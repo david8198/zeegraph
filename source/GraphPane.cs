@@ -2240,7 +2240,7 @@ namespace ZeeGraph
 			// First look for graph objects that lie in front of the data points
 			foreach ( GraphObj graphObj in _graphObjList )
 			{
-				link = graphObj._link;
+				link = graphObj.Link;
 				bool inFront = graphObj.IsInFrontOfData;
 
 				if ( link.IsActive )
@@ -2273,7 +2273,7 @@ namespace ZeeGraph
 			// Third, look for graph objects that lie behind the data points
 			foreach ( GraphObj graphObj in _graphObjList )
 			{
-				link = graphObj._link;
+				link = graphObj.Link;
 				bool inFront = graphObj.IsInFrontOfData;
 
 				if ( link.IsActive )

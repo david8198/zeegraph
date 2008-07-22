@@ -284,8 +284,8 @@ namespace ZeeGraph
 
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			PointF pix = _location.TransformTopLeft( pane );
-			PointF pix2 = _location.TransformBottomRight( pane );
+			PointF pix = Location.TransformTopLeft( pane );
+			PointF pix2 = Location.TransformBottomRight( pane );
 
 			using ( Pen pen = new Pen( Color.Black, (float)GraphPane.Default.NearestTol * 2.0F ) )
 			{
@@ -305,7 +305,7 @@ namespace ZeeGraph
 		{
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			RectangleF pixRect = _location.TransformRect( pane );
+			RectangleF pixRect = Location.TransformRect( pane );
 
 			Matrix matrix = new Matrix();
 			if ( pixRect.Right == 0 )

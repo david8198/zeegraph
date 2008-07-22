@@ -275,8 +275,8 @@ namespace ZeeGraph
 				// Convert the coordinates from the user coordinate system
 				// to the screen coordinate system
 				// Offset the points by the location value
-				PointF pixPt = Location.Transform( pane, pt.X + _location.X, pt.Y + _location.Y,
-						_location.CoordinateFrame );
+				PointF pixPt = Location.Transform( pane, pt.X + Location.X, pt.Y + Location.Y,
+						Location.CoordinateFrame );
 
 				if (	Math.Abs( pixPt.X ) < 100000 &&
 						Math.Abs( pixPt.Y ) < 100000 )

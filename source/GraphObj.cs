@@ -42,21 +42,21 @@ namespace ZeeGraph
 		/// Protected field that stores the location of this <see cref="GraphObj"/>.
 		/// Use the public property <see cref="Location"/> to access this value.
 		/// </summary>
-		protected Location _location;
+		private Location _location;
 
 		/// <summary>
 		/// Protected field that determines whether or not this <see cref="GraphObj"/>
 		/// is visible in the graph.  Use the public property <see cref="IsVisible"/> to
 		/// access this value.
 		/// </summary>
-		protected bool _isVisible;
+		private bool _isVisible;
 		
 		/// <summary>
 		/// Protected field that determines whether or not the rendering of this <see cref="GraphObj"/>
 		/// will be clipped to the ChartRect.  Use the public property <see cref="IsClippedToChartRect"/> to
 		/// access this value.
 		/// </summary>
-		protected bool _isClippedToChartRect;
+		private bool _isClippedToChartRect;
 		
 		/// <summary>
 		/// A tag object for use by the user.  This can be used to store additional
@@ -65,22 +65,22 @@ namespace ZeeGraph
 		/// </summary>
 		/// <remarks>
 		/// Note that, if you are going to Serialize ZedGraph data, then any type
-		/// that you store in <see cref="Tag"/> must be a serializable type (or
+		/// that you store in <see cref="_tag"/> must be a serializable type (or
 		/// it will cause an exception).
 		/// </remarks>
-		public object Tag;
+		private object _tag;
 
 		/// <summary>
 		/// Internal field that determines the z-order "depth" of this
 		/// item relative to other graphic objects.  Use the public property
 		/// <see cref="ZOrder"/> to access this value.
 		/// </summary>
-		internal ZOrder _zOrder;
+		private ZOrder _zOrder;
 
 		/// <summary>
 		/// Internal field that stores the hyperlink information for this object.
 		/// </summary>
-		internal Link _link;
+		private Link _link;
 
 	#endregion
 
@@ -181,7 +181,23 @@ namespace ZeeGraph
 			set { _link = value; }
 		}
 
-		/// <summary>
+	    /// <summary>
+	    /// A tag object for use by the user.  This can be used to store additional
+	    /// information associated with the <see cref="GraphObj"/>.  ZedGraph does
+	    /// not use this value for any purpose.
+	    /// </summary>
+	    /// <remarks>
+	    /// Note that, if you are going to Serialize ZedGraph data, then any type
+	    /// that you store in <see cref="_tag"/> must be a serializable type (or
+	    /// it will cause an exception).
+	    /// </remarks>
+	    public object Tag
+	    {
+	        get { return _tag; }
+	        set { _tag = value; }
+	    }
+
+	    /// <summary>
 		/// true if the <see cref="ZOrder" /> of this object is set to put it in front
 		/// of the <see cref="CurveItem" /> data points.
 		/// </summary>
@@ -304,7 +320,7 @@ namespace ZeeGraph
 		{
 			_isVisible = true;
 			_isClippedToChartRect = Default.IsClippedToChartRect;
-			this.Tag = null;
+			this._tag = null;
 			_zOrder = ZOrder.A_InFront;
 			_location = new Location( x, y, coordType, alignH, alignV );
 			_link = new Link();
@@ -339,7 +355,7 @@ namespace ZeeGraph
 		{
 			_isVisible = true;
 			_isClippedToChartRect = Default.IsClippedToChartRect;
-			this.Tag = null;
+			this._tag = null;
 			_zOrder = ZOrder.A_InFront;
 			_location = new Location( x, y, x2, y2, coordType, alignH, alignV );
 			_link = new Link();
@@ -357,10 +373,10 @@ namespace ZeeGraph
 			_zOrder = rhs.ZOrder;
 
 			// copy reference types by cloning
-			if ( rhs.Tag is ICloneable )
-				this.Tag = ((ICloneable) rhs.Tag).Clone();
+			if ( rhs._tag is ICloneable )
+				this._tag = ((ICloneable) rhs._tag).Clone();
 			else
-				this.Tag = rhs.Tag;
+				this._tag = rhs._tag;
 
 			_location = rhs.Location.Clone();
 			_link = rhs._link.Clone();
@@ -414,7 +430,7 @@ namespace ZeeGraph
 
 			_location = (Location) info.GetValue( "location", typeof(Location) );
 			_isVisible = info.GetBoolean( "isVisible" );
-			Tag = info.GetValue( "Tag", typeof(object) );
+			_tag = info.GetValue( "Tag", typeof(object) );
 			_zOrder = (ZOrder) info.GetValue( "zOrder", typeof(ZOrder) );
 
 			_isClippedToChartRect = info.GetBoolean( "isClippedToChartRect" );
@@ -431,7 +447,7 @@ namespace ZeeGraph
 			info.AddValue( "schema", schema );
 			info.AddValue( "location", _location );
 			info.AddValue( "isVisible", _isVisible );
-			info.AddValue( "Tag", Tag );
+			info.AddValue( "Tag", _tag );
 			info.AddValue( "zOrder", _zOrder );
 
 			info.AddValue( "isClippedToChartRect", _isClippedToChartRect );

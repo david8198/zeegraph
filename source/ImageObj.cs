@@ -268,7 +268,7 @@ namespace ZeeGraph
 			{
 				// Convert the rectangle coordinates from the user coordinate system
 				// to the screen coordinate system
-				RectangleF tmpRect = _location.TransformRect( pane );
+				RectangleF tmpRect = Location.TransformRect( pane );
 
 				if ( _isScaled )
 					g.DrawImage( _image, tmpRect );
@@ -314,7 +314,7 @@ namespace ZeeGraph
 
 				// transform the x,y location from the user-defined
 				// coordinate frame to the screen pixel location
-				RectangleF tmpRect = _location.TransformRect( pane );
+				RectangleF tmpRect = Location.TransformRect( pane );
 
 				return tmpRect.Contains( pt );
 			}
@@ -330,7 +330,7 @@ namespace ZeeGraph
 		{
 			// transform the x,y location from the user-defined
 			// coordinate frame to the screen pixel location
-			RectangleF pixRect = _location.TransformRect( pane );
+			RectangleF pixRect = Location.TransformRect( pane );
 
 			shape = "rect";
 			coords = String.Format( "{0:f0},{1:f0},{2:f0},{3:f0}",
