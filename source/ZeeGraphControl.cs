@@ -406,6 +406,11 @@ namespace ZeeGraph
         /// <seealso cref="SelectButtons" />
         private Keys _selectModifierKeys = Keys.Shift;
 
+        /// <summary>
+        /// Object for thread syncronization
+        /// </summary>
+        private object _syncRoot = new object();
+
         private ScrollRange _xScrollRange;
 
         /// <summary>
@@ -542,7 +547,7 @@ namespace ZeeGraph
         /// </remarks>
         public virtual void AxisChange()
         {
-            lock (this)
+            lock (_syncRoot)
             {
                 if (BeenDisposed || _masterPane == null)
                     return;
@@ -565,7 +570,7 @@ namespace ZeeGraph
         /// disposed, false otherwise</param>
         protected override void Dispose(bool disposing)
         {
-            lock (this)
+            lock (_syncRoot)
             {
                 if (disposing)
                 {
@@ -696,7 +701,7 @@ namespace ZeeGraph
         /// </param>
         protected void HandleResize(EventArgs e)
         {
-            lock (this)
+            lock (_syncRoot)
             {
                 if (BeenDisposed || _masterPane == null)
                     return;
@@ -745,7 +750,7 @@ namespace ZeeGraph
         /// </param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            lock (this)
+            lock (_syncRoot)
             {
                 if (BeenDisposed || _masterPane == null || GraphPane == null)
                     return;

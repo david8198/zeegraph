@@ -305,8 +305,8 @@ namespace ZeeGraph
 		 DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
 		public MasterPane MasterPane
 		{
-			get { lock ( this ) return _masterPane; }
-			set { lock ( this ) _masterPane = value; }
+			get { lock ( _syncRoot ) return _masterPane; }
+			set { lock ( _syncRoot ) _masterPane = value; }
 		}
 
 		// Testing for Designer attribute
@@ -345,7 +345,7 @@ namespace ZeeGraph
 			get
 			{
 				// Just return the first GraphPane in the list
-				lock ( this )
+				lock ( _syncRoot )
 				{
 					if ( _masterPane != null && _masterPane.PaneList.Count > 0 )
 						return _masterPane[0];
@@ -356,7 +356,7 @@ namespace ZeeGraph
 
 			set
 			{
-				lock ( this )
+				lock ( _syncRoot )
 				{
 					//Clear the list, and replace it with the specified Graphpane
 					if ( _masterPane != null )
@@ -1164,7 +1164,7 @@ namespace ZeeGraph
 		 DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
 		public Image GetImage()
 		{
-			lock ( this )
+			lock ( _syncRoot )
 			{
 				if ( BeenDisposed || _masterPane == null || _masterPane[0] == null )
 					throw new ZeeGraphException( "The control has been disposed" );
@@ -1184,7 +1184,7 @@ namespace ZeeGraph
 		{
 			get
 			{
-				lock ( this ) return _masterPane == null;
+				lock ( _syncRoot ) return _masterPane == null;
 			}
 		}
 
