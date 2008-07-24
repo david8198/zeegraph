@@ -720,11 +720,11 @@ namespace ZeeGraph
 			// ZOrder.G_BehindAll
 			base.Draw( g );
 
-			if ( _rect.Width <= 1 || _rect.Height <= 1 )
+			if ( Rect.Width <= 1 || Rect.Height <= 1 )
 				return;
 
 			// Clip everything to the rect
-			g.SetClip( _rect );
+			g.SetClip( Rect );
 
 			// calculate scaleFactor on "normal" pane size (BaseDimension)
 			float scaleFactor = this.CalcScaleFactor();
@@ -764,7 +764,7 @@ namespace ZeeGraph
 
 			// Draw the GraphItems that are behind the Axis objects
 			if ( showGraf )
-				_graphObjList.Draw( g, this, scaleFactor, ZOrder.G_BehindChartFill );
+				GraphObjList.Draw( g, this, scaleFactor, ZOrder.G_BehindChartFill );
 
 			// Fill the axis background
 			_chart.Fill.Draw( g, _chart._rect );
@@ -772,24 +772,24 @@ namespace ZeeGraph
 			if ( showGraf )
 			{
 				// Draw the GraphItems that are behind the CurveItems
-				_graphObjList.Draw( g, this, scaleFactor, ZOrder.F_BehindGrid );
+				GraphObjList.Draw( g, this, scaleFactor, ZOrder.F_BehindGrid );
 
 				DrawGrid( g, scaleFactor );
 
 				// Draw the GraphItems that are behind the CurveItems
-				_graphObjList.Draw( g, this, scaleFactor, ZOrder.E_BehindCurves );
+				GraphObjList.Draw( g, this, scaleFactor, ZOrder.E_BehindCurves );
 
 				// Clip the points to the actual plot area
 				g.SetClip( _chart._rect );
 				_curveList.Draw( g, this, scaleFactor );
-				g.SetClip( _rect );
+				g.SetClip( Rect );
 
 			}
 
 			if ( showGraf )
 			{
 				// Draw the GraphItems that are behind the Axis objects
-				_graphObjList.Draw( g, this, scaleFactor, ZOrder.D_BehindAxis );
+				GraphObjList.Draw( g, this, scaleFactor, ZOrder.D_BehindAxis );
 
 				// Draw the Axes
 				_xAxis.Draw( g, this, scaleFactor, 0.0f );
@@ -810,7 +810,7 @@ namespace ZeeGraph
 				}
 
 				// Draw the GraphItems that are behind the Axis border
-				_graphObjList.Draw( g, this, scaleFactor, ZOrder.C_BehindChartBorder );
+				GraphObjList.Draw( g, this, scaleFactor, ZOrder.C_BehindChartBorder );
 			}
 
 			// Border the axis itself
@@ -819,12 +819,12 @@ namespace ZeeGraph
 			if ( showGraf )
 			{
 				// Draw the GraphItems that are behind the Legend object
-				_graphObjList.Draw( g, this, scaleFactor, ZOrder.B_BehindLegend );
+				GraphObjList.Draw( g, this, scaleFactor, ZOrder.B_BehindLegend );
 
-				_legend.Draw( g, this, scaleFactor );
+				Legend.Draw( g, this, scaleFactor );
 
 				// Draw the GraphItems that are in front of all other items
-				_graphObjList.Draw( g, this, scaleFactor, ZOrder.A_InFront );
+				GraphObjList.Draw( g, this, scaleFactor, ZOrder.A_InFront );
 			}
 
 			// Reset the clipping
@@ -1001,7 +1001,7 @@ namespace ZeeGraph
 			tmpRect.Height -= spaceT + spaceB;
 			tmpRect.Y += spaceT;
 
-			_legend.CalcRect( g, this, scaleFactor, ref tmpRect );
+			Legend.CalcRect( g, this, scaleFactor, ref tmpRect );
 
 			return tmpRect;
 		}
@@ -1832,11 +1832,11 @@ namespace ZeeGraph
 				}
 
 				// See if the point is in the Pane Title
-				SizeF paneTitleBox = _title._fontSpec.BoundingBox( g, _title._text, scaleFactor );
-				if ( saveZOrder <= ZOrder.H_BehindAll && _title._isVisible )
+				SizeF paneTitleBox = Title._fontSpec.BoundingBox( g, Title._text, scaleFactor );
+				if ( saveZOrder <= ZOrder.H_BehindAll && Title._isVisible )
 				{
-					tmpRect = new RectangleF( ( _rect.Left + _rect.Right - paneTitleBox.Width ) / 2,
-						_rect.Top + _margin.Top * scaleFactor,
+					tmpRect = new RectangleF( ( Rect.Left + Rect.Right - paneTitleBox.Width ) / 2,
+						Rect.Top + Margin.Top * scaleFactor,
 						paneTitleBox.Width, paneTitleBox.Height );
 					if ( tmpRect.Contains( mousePt ) )
 					{
@@ -2238,7 +2238,7 @@ namespace ZeeGraph
 			index = -1;
 
 			// First look for graph objects that lie in front of the data points
-			foreach ( GraphObj graphObj in _graphObjList )
+			foreach ( GraphObj graphObj in GraphObjList )
 			{
 				link = graphObj.Link;
 				bool inFront = graphObj.IsInFrontOfData;
@@ -2271,7 +2271,7 @@ namespace ZeeGraph
 			}
 
 			// Third, look for graph objects that lie behind the data points
-			foreach ( GraphObj graphObj in _graphObjList )
+			foreach ( GraphObj graphObj in GraphObjList )
 			{
 				link = graphObj.Link;
 				bool inFront = graphObj.IsInFrontOfData;

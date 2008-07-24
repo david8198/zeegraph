@@ -273,7 +273,7 @@ namespace ZeeGraph
 
 			_paneList = new PaneList();
 
-			_legend.IsVisible = Default.IsShowLegend;
+			Legend.IsVisible = Default.IsShowLegend;
 
 			_isAntiAlias = false;
 
@@ -402,7 +402,7 @@ namespace ZeeGraph
 		{
 			Bitmap bitmap = new Bitmap( 10, 10 );
 			Graphics g = Graphics.FromImage( bitmap );
-			ReSize( g, _rect );
+			ReSize( g, Rect );
 		}
 	#endregion
 
@@ -492,7 +492,7 @@ namespace ZeeGraph
 		/// <seealso cref="SetLayout(Graphics,bool,int[],float[])" />
 		public void ReSize( Graphics g )
 		{
-			ReSize( g, _rect );
+			ReSize( g, Rect );
 		}
 
 		/// <summary>
@@ -515,7 +515,7 @@ namespace ZeeGraph
 		/// <seealso cref="SetLayout(Graphics,bool,int[],float[])" />
 		public override void ReSize( Graphics g, RectangleF rect )
 		{
-			_rect = rect;
+			Rect = rect;
 			DoLayout( g );
 			CommonScaleFactor();
 		}
@@ -583,20 +583,20 @@ namespace ZeeGraph
 			// ZOrder.GBehindAll
 			base.Draw( g );
 
-			if ( _rect.Width <= 1 || _rect.Height <= 1 )
+			if ( Rect.Width <= 1 || Rect.Height <= 1 )
 				return;
 
 			float scaleFactor = CalcScaleFactor();
 
 			// Clip everything to the rect
-			g.SetClip( _rect );
+			g.SetClip( Rect );
 
 			// For the MasterPane, All GraphItems go behind the GraphPanes, except those that
 			// are explicity declared as ZOrder.AInFront
-			_graphObjList.Draw( g, this, scaleFactor, ZOrder.G_BehindChartFill );
-			_graphObjList.Draw( g, this, scaleFactor, ZOrder.E_BehindCurves );
-			_graphObjList.Draw( g, this, scaleFactor, ZOrder.D_BehindAxis );
-			_graphObjList.Draw( g, this, scaleFactor, ZOrder.C_BehindChartBorder );
+			GraphObjList.Draw( g, this, scaleFactor, ZOrder.G_BehindChartFill );
+			GraphObjList.Draw( g, this, scaleFactor, ZOrder.E_BehindCurves );
+			GraphObjList.Draw( g, this, scaleFactor, ZOrder.D_BehindAxis );
+			GraphObjList.Draw( g, this, scaleFactor, ZOrder.C_BehindChartBorder );
 
 			// Reset the clipping
 			g.ResetClip();
@@ -605,19 +605,19 @@ namespace ZeeGraph
 				pane.Draw( g );
 
 			// Clip everything to the rect
-			g.SetClip( _rect );
+			g.SetClip( Rect );
 
-			_graphObjList.Draw( g, this, scaleFactor, ZOrder.B_BehindLegend );
+			GraphObjList.Draw( g, this, scaleFactor, ZOrder.B_BehindLegend );
 			
 			// Recalculate the legend rect, just in case it has not yet been done
 			// innerRect is the area for the GraphPane's
 			RectangleF innerRect = CalcClientRect( g, scaleFactor );
-			_legend.CalcRect( g, this, scaleFactor, ref innerRect );
+			Legend.CalcRect( g, this, scaleFactor, ref innerRect );
 			//this.legend.SetLocation( this,
 			
-			_legend.Draw( g, this, scaleFactor );
+			Legend.Draw( g, this, scaleFactor );
 
-			_graphObjList.Draw( g, this, scaleFactor, ZOrder.A_InFront );
+			GraphObjList.Draw( g, this, scaleFactor, ZOrder.A_InFront );
 			
 			// Reset the clipping
 			g.ResetClip();
@@ -1044,7 +1044,7 @@ namespace ZeeGraph
 
 			// innerRect is the area for the GraphPane's
 			RectangleF innerRect = CalcClientRect( g, scaleFactor );
-			_legend.CalcRect( g, this, scaleFactor, ref innerRect );
+			Legend.CalcRect( g, this, scaleFactor, ref innerRect );
 
 			// scaled InnerGap is the area between the GraphPane.Rect's
 			float scaledInnerGap = (float)( _innerPaneGap * scaleFactor );
