@@ -756,29 +756,6 @@ namespace ZeeGraph
 		/// the owner of the new Scale</param>
 		/// <returns>A new <see cref="Scale" /> clone.</returns>
 		abstract public Scale Clone( Axis owner );
-/*
-		/// <summary>
-		/// Implement the <see cref="ICloneable" /> interface in a typesafe manner by just
-		/// calling the typed version of Clone />
-		/// </summary>
-		/// <remarks>
-		/// Note that this method must be called with an explicit cast to ICloneable, and
-		/// that it is inherently virtual.  For example:
-		/// <code>
-		/// ParentClass foo = new ChildClass();
-		/// ChildClass bar = (ChildClass) ((ICloneable)foo).Clone();
-		/// </code>
-		/// Assume that ChildClass is inherited from ParentClass.  Even though foo is declared with
-		/// ParentClass, it is actually an instance of ChildClass.  Calling the ICloneable implementation
-		/// of Clone() on foo actually calls ChildClass.Clone() as if it were a virtual function.
-		/// </remarks>
-		/// <returns>A deep copy of this object</returns>
-		object ICloneable.Clone()
-		{
-			throw new NotImplementedException( "Can't clone an abstract base type -- child types must implement ICloneable" );
-			//return new PaneBase( this );
-		}
-*/
 
 		/// <summary>
 		/// A construction method that creates a new <see cref="Scale"/> object using the
@@ -995,24 +972,7 @@ namespace ZeeGraph
 							type == AxisType.DateAsOrdinal;
 			}
 		}
-/*
-		/// <summary>
-		/// The pixel position at the minimum value for this axis.  This read-only
-		/// value is used/valid only during the Draw process.
-		/// </summary>
-		public float MinPix
-		{
-			get { return _minPix; }
-		}
-		/// <summary>
-		/// The pixel position at the maximum value for this axis.  This read-only
-		/// value is used/valid only during the Draw process.
-		/// </summary>
-		public float MaxPix
-		{
-			get { return _maxPix; }
-		}
-*/
+
 		/// <summary>
 		/// Gets or sets the minimum scale value for this <see cref="Scale" />.
 		/// </summary>
@@ -1613,30 +1573,7 @@ namespace ZeeGraph
 		}
 
 	#endregion
-/*
-	#region events
 
-		/// <summary>
-		/// A delegate that allows full custom formatting of the Axis labels
-		/// </summary>
-		/// <param name="pane">The <see cref="GraphPane" /> for which the label is to be
-		/// formatted</param>
-		/// <param name="axis">The <see cref="Axis" /> for which the label is to be formatted</param>
-		/// <param name="val">The value to be formatted</param>
-		/// <param name="index">The zero-based index of the label to be formatted</param>
-		/// <returns>
-		/// A string value representing the label, or null if the ZedGraph should go ahead
-		/// and generate the label according to the current settings</returns>
-		/// <seealso cref="ScaleFormatEvent" />
-		public delegate string ScaleFormatHandler( GraphPane pane, Axis axis, double val, int index );
-
-		/// <summary>
-		/// Subscribe to this event to handle custom formatting of the scale labels.
-		/// </summary>
-		public event ScaleFormatHandler ScaleFormatEvent;
-
-	#endregion
-*/
 	#region Methods
 
 		/// <summary>
@@ -1676,14 +1613,6 @@ namespace ZeeGraph
 
 		}
 
-/*		internal void ResetScaleData()
-		{
-			_minPix = float.NaN;
-			_maxPix = float.NaN;
-			_minLinTemp = double.NaN;
-			_maxLinTemp = double.NaN;
-		}
-*/
 		/// <summary>
 		/// Convert a value to its linear equivalent for this type of scale.
 		/// </summary>
@@ -1712,49 +1641,6 @@ namespace ZeeGraph
 		{
 			return val;
 		}
-/*
-		/// <summary>
-		/// Make a value label for the axis at the specified ordinal position.
-		/// </summary>
-		/// <remarks>
-		/// This method properly accounts for <see cref="IsLog"/>, <see cref="IsText"/>,
-		/// and other axis format settings.
-		/// </remarks>
-		/// <param name="pane">
-		/// A reference to the <see cref="GraphPane"/> object that is the parent or
-		/// owner of this object.
-		/// </param>
-		/// <param name="index">
-		/// The zero-based, ordinal index of the label to be generated.  For example, a value of 2 would
-		/// cause the third value label on the axis to be generated.
-		/// </param>
-		/// <param name="dVal">
-		/// The numeric value associated with the label.  This value is ignored for log (<see cref="IsLog"/>)
-		/// and text (<see cref="IsText"/>) type axes.
-		/// </param>
-		/// <returns>The resulting value label as a <see cref="string" /></returns>
-		virtual internal string MakeLabel( GraphPane pane, int index, double dVal )
-		{
-			if ( this.ScaleFormatEvent != null )
-			{
-				string label;
-
-				label = this.ScaleFormatEvent( pane, _ownerAxis, dVal, index );
-				if ( label != null )
-					return label;
-			}
-
-			if ( _format == null )
-				_format = Scale.Default.Format;
-
-			// linear or ordinal is the default behavior
-			// this method is overridden for other Scale types
-
-			double scaleMult = Math.Pow( (double) 10.0, _mag );
-
-			return ( dVal / scaleMult ).ToString( _format );
-		}
-*/
 
 		/// <summary>
 		/// Make a value label for the axis at the specified ordinal position.
@@ -2709,36 +2595,6 @@ namespace ZeeGraph
 				}
 
 			}
-
-			/*
-				if ( yMinVal >= Double.MaxValue || yMaxVal <= Double.MinValue )
-				{
-					if ( y2MinVal < Double.MaxValue && y2MaxVal > Double.MinValue )
-					{
-						yMinVal = y2MinVal;
-						yMaxVal = y2MaxVal;
-					}
-					else
-					{
-						yMinVal = 0;
-						yMaxVal = 0.01;
-					}
-				}
-			
-				if ( y2MinVal >= Double.MaxValue || y2MaxVal <= Double.MinValue )
-				{
-					if ( yMinVal < Double.MaxValue && yMaxVal > Double.MinValue )
-					{
-						y2MinVal = yMinVal;
-						y2MaxVal = yMaxVal;
-					}
-					else
-					{
-						y2MinVal = 0;
-						y2MaxVal = 1;
-					}
-				}
-				*/
 		}
 
 	#endregion
