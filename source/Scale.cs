@@ -994,7 +994,13 @@ namespace ZeeGraph
 		public virtual double Min
 		{
 			get { return _min; }
-			set { _min = value; _minAuto = false; }
+			set
+			{
+			    _min = value;
+                _minAuto = false;
+
+                OnChanged(EventArgs.Empty);
+			}
 		}
 		/// <summary>
 		/// Gets or sets the maximum scale value for this <see cref="Scale" />.
@@ -1018,7 +1024,12 @@ namespace ZeeGraph
 		public virtual double Max
 		{
 			get { return _max; }
-			set { _max = value; _maxAuto = false; }
+			set {
+
+                _max = value;
+                _maxAuto = false;
+			    OnChanged(EventArgs.Empty);
+            }
 		}
 		/// <summary>
 		/// Gets or sets the scale step size for this <see cref="Scale" /> (the increment between
@@ -2241,9 +2252,31 @@ namespace ZeeGraph
 
 	#endregion
 
-	#region Scale Picker Methods
+        #region Events
 
-		/// <summary>
+	    /// <summary>
+	    /// Raised when the Min or Max of the scale has been changed
+	    /// </summary>
+	    public event EventHandler Changed;
+
+	    /// <summary>
+	    /// Raises the Changed Event
+	    /// </summary>
+	    protected virtual void OnChanged(EventArgs e)
+	    {
+	        if (Changed == null) return;
+
+	        foreach (EventHandler handler in Changed.GetInvocationList())
+	        {
+                handler(this, e);
+	        }
+	    }
+
+        #endregion
+
+        #region Scale Picker Methods
+
+        /// <summary>
 		/// Select a reasonable scale given a range of data values.
 		/// </summary>
 		/// <remarks>
