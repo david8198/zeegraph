@@ -25,7 +25,7 @@ using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
 
-namespace ZeeGraph
+namespace ZeeGraph.WinForms
 {
     /// <summary>
     /// The ZeeGraphControl class provides a UserControl interface to the

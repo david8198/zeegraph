@@ -28,7 +28,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 //using System.Diagnostics;
 
-namespace ZeeGraph
+namespace ZeeGraph.WinForms
 {
 	partial class ZeeGraphControl
 	{

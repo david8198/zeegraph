@@ -23,7 +23,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace ZeeGraph
+namespace ZeeGraph.WinForms
 {
 	partial class ZeeGraphControl
 	{

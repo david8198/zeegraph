@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2541686B-1673-43BF-AF89-3163945DB009}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -146,25 +146,25 @@
     <Compile Include="Y2AxisList.cs" />
     <Compile Include="YAxis.cs" />
     <Compile Include="YAxisList.cs" />
-    <Compile Include="ZeeGraphControl.ContextMenu.cs">
+    <Compile Include="WinForms\ZeeGraphControl.ContextMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ZeeGraphControl.cs">
+    <Compile Include="WinForms\ZeeGraphControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ZeeGraphControl.Designer.cs">
+    <Compile Include="WinForms\ZeeGraphControl.Designer.cs">
       <DependentUpon>ZeeGraphControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ZeeGraphControl.Events.cs">
+    <Compile Include="WinForms\ZeeGraphControl.Events.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ZeeGraphControl.Printing.cs">
+    <Compile Include="WinForms\ZeeGraphControl.Printing.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ZeeGraphControl.Properties.cs">
+    <Compile Include="WinForms\ZeeGraphControl.Properties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ZeeGraphControl.ScrollBars.cs">
+    <Compile Include="WinForms\ZeeGraphControl.ScrollBars.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ZeeGraphException.cs" />
@@ -172,7 +172,7 @@
     <Compile Include="ZoomStateStack.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ZeeGraphControl.resx">
+    <EmbeddedResource Include="WinForms\ZeeGraphControl.resx">
       <DependentUpon>ZeeGraphControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

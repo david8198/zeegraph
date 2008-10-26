@@ -1,4 +1,4 @@
-namespace ZeeGraph
+namespace ZeeGraph.WinForms
 {
 	partial class ZeeGraphControl
 	{
