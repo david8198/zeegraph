@@ -47,10 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web\TempFileDestructor.cs" />
-    <Compile Include="Web\ZeeGraphWeb.cs" />
-    <Compile Include="Web\ZeeGraphWebData.cs" />
-    <Compile Include="Web\ZeeGraphWebTools.cs" />
     <Compile Include="ArrowObj.cs" />
     <Compile Include="Axis.cs" />
     <Compile Include="AxisLabel.cs" />
@@ -146,36 +142,11 @@
     <Compile Include="Y2AxisList.cs" />
     <Compile Include="YAxis.cs" />
     <Compile Include="YAxisList.cs" />
-    <Compile Include="WinForms\ZeeGraphControl.ContextMenu.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\ZeeGraphControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\ZeeGraphControl.Designer.cs">
-      <DependentUpon>ZeeGraphControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\ZeeGraphControl.Events.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\ZeeGraphControl.Printing.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\ZeeGraphControl.Properties.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\ZeeGraphControl.ScrollBars.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="ZeeGraphException.cs" />
     <Compile Include="ZoomState.cs" />
     <Compile Include="ZoomStateStack.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="WinForms\ZeeGraphControl.resx">
-      <DependentUpon>ZeeGraphControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ZeeGraphLocale.de.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

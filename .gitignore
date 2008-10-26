@@ -1,7 +1,3 @@
 *.resharper*
 *.suo
 *.user
-source/bin
-source/obj
-tests/bin
-tests/obj

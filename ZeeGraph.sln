@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeeGraph", "source\ZeeGraph.csproj", "{2541686B-1673-43BF-AF89-3163945DB009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeeGraph.Tests", "tests\ZeeGraph.Tests.csproj", "{79BF07F5-6D10-4025-BE64-F090BB5A5F71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeeGraph.WinForms", "source\WinForms\ZeeGraph.WinForms.csproj", "{856AA79E-7AF4-4EC2-85A1-821DA6FCA046}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeeGraph.Web", "source\Web\ZeeGraph.Web.csproj", "{0A6C463D-C257-4E99-9E1D-FDA3668BC843}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test Projects", "Test Projects", "{484E5A5F-EC5C-4EED-A50D-E1CE4DE724A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeeGraph.Tests", "source\tests\ZeeGraph.Tests.csproj", "{79BF07F5-6D10-4025-BE64-F090BB5A5F71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeeGraph.Web.Tests", "source\Web\Tests\ZeeGraph.Web.Tests.csproj", "{DA14ED9F-FFE7-4EA0-B5DF-45439AE24ED8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeeGraph.WinForms.Tests", "source\WinForms\Tests\ZeeGraph.WinForms.Tests.csproj", "{3F790DC0-B08A-44DF-858D-450ECF73330E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,12 +25,33 @@ Global
 		{2541686B-1673-43BF-AF89-3163945DB009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2541686B-1673-43BF-AF89-3163945DB009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2541686B-1673-43BF-AF89-3163945DB009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{856AA79E-7AF4-4EC2-85A1-821DA6FCA046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{856AA79E-7AF4-4EC2-85A1-821DA6FCA046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{856AA79E-7AF4-4EC2-85A1-821DA6FCA046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{856AA79E-7AF4-4EC2-85A1-821DA6FCA046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A6C463D-C257-4E99-9E1D-FDA3668BC843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A6C463D-C257-4E99-9E1D-FDA3668BC843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A6C463D-C257-4E99-9E1D-FDA3668BC843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A6C463D-C257-4E99-9E1D-FDA3668BC843}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79BF07F5-6D10-4025-BE64-F090BB5A5F71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79BF07F5-6D10-4025-BE64-F090BB5A5F71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79BF07F5-6D10-4025-BE64-F090BB5A5F71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79BF07F5-6D10-4025-BE64-F090BB5A5F71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA14ED9F-FFE7-4EA0-B5DF-45439AE24ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA14ED9F-FFE7-4EA0-B5DF-45439AE24ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA14ED9F-FFE7-4EA0-B5DF-45439AE24ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA14ED9F-FFE7-4EA0-B5DF-45439AE24ED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F790DC0-B08A-44DF-858D-450ECF73330E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F790DC0-B08A-44DF-858D-450ECF73330E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F790DC0-B08A-44DF-858D-450ECF73330E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F790DC0-B08A-44DF-858D-450ECF73330E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{79BF07F5-6D10-4025-BE64-F090BB5A5F71} = {484E5A5F-EC5C-4EED-A50D-E1CE4DE724A9}
+		{DA14ED9F-FFE7-4EA0-B5DF-45439AE24ED8} = {484E5A5F-EC5C-4EED-A50D-E1CE4DE724A9}
+		{3F790DC0-B08A-44DF-858D-450ECF73330E} = {484E5A5F-EC5C-4EED-A50D-E1CE4DE724A9}
 	EndGlobalSection
 EndGlobal

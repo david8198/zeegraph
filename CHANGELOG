@@ -1,5 +1,8 @@
 == Version 1.0 ==
 
+;25-Oct-2008 (Warren Kaufman) v1.0
+: Create Seperate Libraries for Windows.Forms components and Web Components
+
 ;27-Jul-2008 (Warren Kaufman) v1.0
 : Import v5.1.4 Release of ZedGraph
 : Merge Web Code into main library
