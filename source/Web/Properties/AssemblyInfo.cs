@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Web")]
+[assembly: AssemblyTitle("ZeeGraph Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Web")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2008")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ZeeGraph Library")]
+[assembly: AssemblyCopyright("Copyright © ZeeGraph Project 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

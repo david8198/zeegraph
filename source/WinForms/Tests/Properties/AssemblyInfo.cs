@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ZeeGraph Windows Forms Tests")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2008")]
+[assembly: AssemblyCopyright("Copyright © ZeeGraph Project 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
